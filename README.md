@@ -17,11 +17,7 @@ However, in the data analysis stage of a science project, preparing the data tak
 3. Tidying and reshaping data with [tidyr](https://tidyr.tidyverse.org/)
 
 ### Days 3-5: Small Group Data Sprints
-<<<<<<< HEAD
-This is going to be cool! :tada: With your lab or research group and some data, we'll meet for one-hour intensive sessions where we'll review your research questions, data, and requirements. Then we'll put your newly-acquired reproducible data analysis skills to immediate use and do data preparation, analysis, visualization, or all of the above. Depending on how many groups there are, we might meet more than once.
-=======
-This is going to be fun! :tada: With your lab or research group and some data, we'll meet for one-hour intensive sessions where we'll review your research questions, data, and requirements. Then you'll put your newly-acquired reproducible data analysis skills to immediate use and together, we will do data preparation, analysis, visualization, or all of the above. Depending on how many groups there are, we might meet more than once. These sprints are especially helpful if you are looking to move your team from SPSS and finally take control of your data analysis! 
->>>>>>> first draft completed
+This is going to be fun! :tada: With your lab or research group and some data, we'll meet for one-hour intensive sessions where we'll review your research questions, data, and requirements. Then you'll put your newly-acquired reproducible data analysis skills to immediate use and together, we will do data preparation, analysis, visualization, or all of the above. Depending on how many groups there are, we might meet more than once. These sprints are especially helpful if you are looking to move your team from SPSS and finally take control of your data analysis!
 
 ## Frequently Asked Questions
 * ANOVAs make my head hurt. Do I need to know how to do stats?
@@ -34,11 +30,7 @@ This is going to be fun! :tada: With your lab or research group and some data, w
   * We're still hammering out the details, but you probably will be working off your laptop. A few weeks prior to the workshop, I'll upload installation instructions and some test code to make sure Rstudio and the tidyverse packages are configured correctly.
 
 * What do I need for the small group data sprints?
-<<<<<<< HEAD
-  * Review with your lab or research group and decide what project you'd like to cover. Prior to the workshop, you'll submit your dataset and a description of which magic tricks :crystal_ball: you need to do on it. More information will be shared soon.
-=======
   * Review with your lab or research group and decide what project you'd like to cover. Prior to the workshop, you'll submit to me your dataset and a description of which magic tricks :crystal_ball: you need to do on it. More information will be shared soon.
->>>>>>> first draft completed
 
 * I'm not a scientist or working in a research lab. Should this interest me?
   * :fist::punch::fist::punch:. If you're looking into data-oriented careers (e.g., data analyst, data scientist, or data engineer), the skills you learn here are highly desired in those jobs (one example - me!).
