@@ -1,6 +1,6 @@
 # Launch Into The Tidyverse! Reproducible Data Analysis in R :rocket:
 
-### March 25-29, 2019
+### March 25-29, 2019 at [NTID](http://www.ntid.edu), Rochester, NY
 
 ## Objective
 Scientists are increasingly required to make their data preparation, analysis, and statistics **reproducible**. :point_up: Reproducible resarch means anyone should be able to take your dataset and, using your analysis plan, arrive at exactly the same results as you did. That's good science! :raised_hands:
@@ -45,4 +45,4 @@ This is going to be fun! :tada: With your lab or research group and some data, w
 I'm a deaf data scientist at [Convo](http://www.convorelay.com). I first cut my teeth on data programming and statistics while working on my Ph.D. in Educational Neuroscience at Gallaudet University. I used Matlab and R for my dissertation data analysis of infants' brain responses to visual linguistic and non-linguistic patterning. After that, I did a postdoc with Dr. Rain Bosworth at UCSD where I really dove into R 24/7, using it to analyze and report eye-tracking data of infants and adults watching sign language videos. At Convo, I still use R every day to do data analyses, and I've also branched out into SQL and building [data stacks](https://medium.com/@foundinblank/whats-a-data-stack-7c96f7a15fe8) to make sure all our data is flowing into the right places and is easily retrieved, understood, and interpreted by different business teams. I live in Edinburgh, Scotland, where my husband and I enjoy the great view of a 1,000-year-old castle from our kitchen window.
 
 ## Acknowledgments
-Hosted by Dr. Matt Dye (Director) & Dr. Geo Kartheiser (Postdoctoral Researcher) from the [deaf x lab](http://www.deafxlab.com/). Funding provided by Academic Affairs at [National Technical Instiute for the Deaf](http://www.ntid.edu).
+Hosted by Dr. Matt Dye (Director) & Dr. Geo Kartheiser (Postdoctoral Researcher) from the [deaf x lab](http://www.deafxlab.com/). Funding provided by Academic Affairs at [National Technical Institute for the Deaf](http://www.ntid.edu).
