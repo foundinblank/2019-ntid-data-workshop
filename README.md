@@ -29,8 +29,8 @@ This is going to be fun! :tada: With your lab or research group and some data, w
   * Coding experience is not required, but I'd recommend having at least some basic exposure to programming (e.g., setting variables, using functions). To get your feet wet, there's no better place to start than [Codecademy's (free!) Python course](https://www.codecademy.com/learn/learn-python).
 
 * What do I need to bring to the workshop? Do I need to install software on my laptop?
-  * We're still hammering out the details, but you probably will be working off your laptop. A few weeks prior to the workshop, I'll upload installation instructions and some test code to make sure Rstudio and the tidyverse packages are configured correctly.
-  * **New:** I'm also considering the use of [RStudio.cloud](https://rstudio.cloud/) - an instance of RStudio that runs entirely on the web. Best, I can even share my workspace with others...up to 10 collaborators, though. It's an option if you don't have a laptop, or don't want to install RStudio.
+  * Your laptop! If you don't have one you can use, [let me know](mailto:adamstone@gmail.com).
+  * We'll be using [RStudio.cloud](https://rstudio.cloud/) - an instance of RStudio that runs entirely within your browser. Like Google Docs, but for R! No installation needed! You'll probably want to eventually have a copy of R and RStudio on your computer anyway for the data sprints. I'll upload (or link to) installation instructions and some test code.
 
 * What do I need for the small group data sprints?
   * Review with your lab or research group and decide what project you'd like to cover. Prior to the workshop, you'll submit to me your dataset and a description of which magic tricks :crystal_ball: you need to do on it. More information will be shared soon.
