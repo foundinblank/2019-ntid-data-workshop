@@ -28,6 +28,9 @@ This is going to be fun! :tada: With your lab or research group and some data, w
 * I don't know how to code! Is that okay?
   * Coding experience is not required, but I'd recommend having at least some basic exposure to programming (how to assign a number to a variable, how to call a function). To get your feet wet, there's no better place to start than [Codecademy's (free!) Python course](https://www.codecademy.com/learn/learn-python).
 
+* I already know how to do some stuff in R. Will I be bored?
+  * Our code discussions will primarily focus on manipulating data in [the tidyverse](http://www.tidyverse.org). If you've been using R but aren't familiar with `select()`, `%>%`, or `ggplot()`, you will definitely find this a life-change-R! :see_no_evil:
+
 * What do I need to bring to the workshop? Do I need to install software on my laptop?
   * Your laptop! If you don't have one you can use, [let me know](mailto:adamstone@gmail.com).
   * We'll be using [RStudio.cloud](https://rstudio.cloud/) - an instance of RStudio that runs entirely within your browser. Like Google Docs, but for R! No installation needed. You'll probably want to eventually have a copy of R and RStudio on your computer anyway for the data sprints. I'll upload (or link to) installation instructions and some test code.
