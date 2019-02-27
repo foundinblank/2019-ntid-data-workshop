@@ -26,7 +26,7 @@ This is going to be fun! :tada: With your lab or research group and some data, w
   * Nope! We won't discuss statistical testing in the workshops, but the datasets you've prepared using [Rstudio](http://www.rstudio.com) and [the tidyverse](http://www.tidyverse.org) will make your statistical testing easier to run and interpret. We can go over stats in the small group data sprints, though.
 
 * I don't know how to code! Is that okay?
-  * Coding experience is not required, but I'd recommend having at least some basic exposure to programming (how to assign a number to a variable, how to call a function). To get your feet wet, there's no better place to start than [Codecademy's (free!) Python course](https://www.codecademy.com/learn/learn-python).
+  * Coding experience is not required! The best way to learn is to just dive in. If you want to get your feet wet with some basic programming (e.g., get into the mindset of a computer and how it thinks), there's no better place to start than [Codecademy's (free!) Python course](https://www.codecademy.com/learn/learn-python).
 
 * I already know how to do some stuff in R. Will I be bored?
   * Our code discussions will primarily focus on manipulating data in [the tidyverse](http://www.tidyverse.org). If you've been using R but aren't familiar with `select()`, `%>%`, or `ggplot()`, you will definitely find this a life-change-R! :see_no_evil:
