@@ -4,7 +4,7 @@
 
 # library(tidyverse)
 #
-# df <- read_csv("data/SYB61_T29_Internet Usage.csv",
+# df <- read_csv("data/originals/SYB61_T29_Internet Usage.csv",
 #                skip = 2,
 #                col_names = c("id",
 #                              "area",
@@ -16,7 +16,7 @@
 #   mutate(value = value/100) %>%
 #   write_csv("data/Internet_Usage_by_Country.csv")
 #
-# df <- read_csv("data/marvel_wiki_data.csv") %>%
+# df <- read_csv("data/originals/marvel_wiki_data.csv") %>%
 #   janitor::clean_names() %>%
 #   mutate(name = str_remove(name, '\\(.+\\)^'),
 #          name = str_remove(name, '\\\\.+\\\\"'),
@@ -26,6 +26,18 @@
 #   mutate(align = str_remove(align, "Characters"),
 #          align = str_trim(align)) %>%
 #   write_csv("data/Marvel_Characters.csv")
+#
+# df <- haven::read_sav("data/originals/Fingerspelling and Fluency PLoS Data Set.sav") %>%
+#   janitor::clean_names() %>%
+#   rename(id = vl2id,
+#          piat = raw_piatr,
+#          wj_reading_fluency = raw_rf_wj,
+#          kbit = raw_kb_matrices,
+#          asl_srt = raw_aslsrt,
+#          fingerspelling = raw_tc_fst) %>%
+#   select(-c(raw_b_span_man)) %>%
+#   write_csv("data/Stone_etal_PLoS_2015_Fingerspelling.csv")
+
 
 
 # Visualizing 1 -----------------------------------------------------------
@@ -40,7 +52,7 @@ glimpse(internet_usage)
 
 # Compare internet usage across countries
 internet_usage %>%
-  filter(area %in% c('United States of America', 'Liberia')) %>%
+  filter(area %in% c('United States of America', 'Canada')) %>%
   ggplot(aes(x = year, y = value, color = area)) +
   geom_line() +
   geom_point() +
@@ -127,7 +139,7 @@ marvel %>%
   coord_flip() +
   labs(x = "",
        y = "",
-       title = "Character Alignment By Gender",
+       title = "Marvel Character Alignment",
        fill = "") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
@@ -143,13 +155,15 @@ marvel %>%
 #This is for umm...figuring out all the different geom_things 
 # Load packages ----------------------------------------------------------------
 library(tidyverse)
-library(unvotes)
 library(lubridate)
+library(unvotes)
+
 
 # Make a plot ------------------------------------------------------------------
 # Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013)
 
-un_votes %>%
+# Organize the data (don't worry about this yet!)
+un_votes_data <- un_votes %>%
   filter(country %in% c("United States of America", "Israel")) %>%
   inner_join(un_roll_calls, by = "rcid") %>%
   inner_join(un_roll_call_issues, by = "rcid") %>%
@@ -158,7 +172,10 @@ un_votes %>%
     votes = n(),
     percent_yes = mean(vote == "yes")
   ) %>%
-  filter(votes > 5) %>%  # only use records where there are more than 5 votes
+  filter(votes > 5)  # only use records where there are more than 5 votes
+
+# Plot the data
+un_votes_data %>%
   ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE) +
