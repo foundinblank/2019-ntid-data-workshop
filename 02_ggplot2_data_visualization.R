@@ -1,44 +1,5 @@
 # DESCRIPTION GOES HERE
 
-# CSV Cleaning ------------------------------------------------------------
-
-# library(tidyverse)
-#
-# df <- read_csv("data/originals/SYB61_T29_Internet Usage.csv",
-#                skip = 2,
-#                col_names = c("id",
-#                              "area",
-#                              "year",
-#                              "series",
-#                              "value",
-#                              "footnotes",
-#                              "source")) %>%
-#   mutate(value = value/100) %>%
-#   write_csv("data/Internet_Usage_by_Country.csv")
-#
-# df <- read_csv("data/originals/marvel_wiki_data.csv") %>%
-#   janitor::clean_names() %>%
-#   mutate(name = str_remove(name, '\\(.+\\)^'),
-#          name = str_remove(name, '\\\\.+\\\\"'),
-#          name = str_remove(name, '\\(Earth-616\\)')) %>%
-#   mutate(sex = str_remove(sex, "Characters"),
-#          sex = str_trim(sex)) %>%
-#   mutate(align = str_remove(align, "Characters"),
-#          align = str_trim(align)) %>%
-#   write_csv("data/Marvel_Characters.csv")
-#
-# df <- haven::read_sav("data/originals/Fingerspelling and Fluency PLoS Data Set.sav") %>%
-#   janitor::clean_names() %>%
-#   rename(id = vl2id,
-#          piat = raw_piatr,
-#          wj_reading_fluency = raw_rf_wj,
-#          kbit = raw_kb_matrices,
-#          asl_srt = raw_aslsrt,
-#          fingerspelling = raw_tc_fst) %>%
-#   select(-c(raw_b_span_man)) %>%
-#   write_csv("data/Stone_etal_PLoS_2015_Fingerspelling.csv")
-
-
 
 # Visualizing 1 -----------------------------------------------------------
 
@@ -151,16 +112,16 @@ marvel %>%
   
 
 # Visualizing 3 -----------------------------------------------------------
-#
-#This is for umm...figuring out all the different geom_things 
-# Load packages ----------------------------------------------------------------
+
 library(tidyverse)
 library(lubridate)
 library(unvotes)
 
 
 # Make a plot ------------------------------------------------------------------
-# Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013)
+
+# Dataset: Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013)
+# Code: Mine Centinkaya-Rundel (2018), http://bit.ly/let-eat-cake
 
 # Organize the data (don't worry about this yet!)
 un_votes_data <- un_votes %>%
@@ -176,7 +137,7 @@ un_votes_data <- un_votes %>%
 
 # Plot the data
 un_votes_data %>%
-  ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +
+  ggplot(aes(x = year, y = percent_yes, color = country)) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE) +
   facet_wrap(~ issue) +
@@ -187,9 +148,6 @@ un_votes_data %>%
     x = "Year",
     color = "Country"
   )
-
-
-
 
 
 
