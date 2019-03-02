@@ -1,8 +1,9 @@
-library(tidyverse)
-
+# DESCRIPTION GOES HERE
 
 # CSV Cleaning ------------------------------------------------------------
 
+# library(tidyverse)
+#
 # df <- read_csv("data/SYB61_T29_Internet Usage.csv",
 #                skip = 2,
 #                col_names = c("id",
@@ -14,15 +15,30 @@ library(tidyverse)
 #                              "source")) %>%
 #   mutate(value = value/100) %>%
 #   write_csv("data/Internet_Usage_by_Country.csv")
+#
+# df <- read_csv("data/marvel_wiki_data.csv") %>%
+#   janitor::clean_names() %>%
+#   mutate(name = str_remove(name, '\\(.+\\)^'),
+#          name = str_remove(name, '\\\\.+\\\\"'),
+#          name = str_remove(name, '\\(Earth-616\\)')) %>%
+#   mutate(sex = str_remove(sex, "Characters"),
+#          sex = str_trim(sex)) %>%
+#   mutate(align = str_remove(align, "Characters"),
+#          align = str_trim(align)) %>%
+#   write_csv("data/Marvel_Characters.csv")
 
 
 # Visualizing 1 -----------------------------------------------------------
 
-# Data from http://data.un.org/ (Communication: Internet Usage)
+library(tidyverse)
+
+# Data from UN Data (Communication: Internet Usage)
+# http://data.un.org/
 internet_usage <- read_csv("data/Internet_Usage_by_Country.csv")
 
 glimpse(internet_usage)
 
+# Compare internet usage across countries
 internet_usage %>%
   filter(area %in% c('United States of America', 'Liberia')) %>%
   ggplot(aes(x = year, y = value, color = area)) +
@@ -41,8 +57,52 @@ internet_usage %>%
 
 # Visualizing 2 -----------------------------------------------------------
 
-got <- readxl::read_xlsx("~/Downloads/GoTdata_FINAL.xlsx")
+library(tidyverse)
 
+# Data from FiveThirtyEight's Comic Characters dataset
+# https://github.com/fivethirtyeight/data/tree/master/comic-characters
+# Article: https://fivethirtyeight.com/features/women-in-comic-books/
+marvel <- read_csv("data/Marvel_Characters.csv") 
+  
+glimpse(marvel)
+
+# Which are the most frequent characters?
+marvel %>%
+  mutate(name = fct_reorder(name, desc(appearances))) %>%
+  filter(appearances > 1500) %>%
+  ggplot(aes(x = name, y = appearances, fill = sex, label = appearances)) +
+  geom_col() +
+  geom_text(size = 2, nudge_y = -100) +
+  labs(x = "",
+       y = "appearances",
+       title = "Marvel Character Appearances") +
+  theme(axis.text.x = element_text(angle = -45, hjust = 0))
+
+# How many characters get introduced per year? 
+# Try adding fill = sex
+marvel %>%
+  ggplot(aes(x = year)) +
+  geom_bar(fill = "dark red", color = "black", width = 1) +
+  labs(x = "year",
+       y = "characters", 
+       title = "New Marvel Characters Introduced Per Year") +
+  theme_linedraw()
+
+# Gender parity 
+marvel %>%
+  mutate(sex = recode(sex, .default = "Other", .missing = "Other", "F" = "F")) %>%
+  group_by(year, sex) %>%
+  summarise(characters = n()) %>%
+  spread(sex, characters) %>%
+  ungroup() %>%
+  arrange(year) %>%
+  mutate(f_sum = cumsum(F),
+         o_sum = cumsum(Other),
+         total = f_sum + o_sum,
+         ratio = f_sum/total) %>%
+  ggplot(aes(x = year, y = ratio)) +
+  geom_line()
+  
 
 # Visualizing 3 -----------------------------------------------------------
 #
