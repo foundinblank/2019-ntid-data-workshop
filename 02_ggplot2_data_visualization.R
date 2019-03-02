@@ -96,12 +96,46 @@ marvel %>%
   spread(sex, characters) %>%
   ungroup() %>%
   arrange(year) %>%
+  mutate(F = coalesce(F, 0L),
+         Other = coalesce(Other, 0L)) %>%
   mutate(f_sum = cumsum(F),
          o_sum = cumsum(Other),
          total = f_sum + o_sum,
          ratio = f_sum/total) %>%
   ggplot(aes(x = year, y = ratio)) +
-  geom_line()
+  geom_line(color = "dark red", size = 1, linetype = "longdash") +
+  geom_hline(yintercept = .5) +
+  scale_y_continuous(limits = c(0,1), labels = scales::percent) +
+  labs(x = "year",
+       y = "percent of female characters",
+       title = "Gender Ratio in Marvel Universe") +
+  theme_bw()
+
+# Character Alignment
+# What happens if you comment out coord_flip()
+marvel %>%
+  filter(sex == "Male" | sex == "Female") %>%
+  filter(!is.na(align)) %>%
+  group_by(sex, align) %>%
+  janitor::tabyl(sex, align) %>%
+  janitor::adorn_percentages() %>%
+  gather(align, percent, Bad:Neutral) %>%
+  mutate(align = fct_relevel(align, "Bad", "Neutral", "Good")) %>%
+  ggplot(aes(x = sex, y = percent, fill = align)) +
+  geom_col(width = 0.75, color = "black") +
+  geom_text(aes(label = scales::percent(percent)), position = position_fill(vjust = 0.5)) +
+  coord_flip() +
+  labs(x = "",
+       y = "",
+       title = "Character Alignment By Gender",
+       fill = "") +
+  theme_minimal() +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        panel.grid = element_blank(),
+        axis.text.y = element_text(size = 14),
+        legend.position = "bottom")
+  
   
 
 # Visualizing 3 -----------------------------------------------------------
