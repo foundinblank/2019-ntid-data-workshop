@@ -71,4 +71,21 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
                                  "3" = "High")) %>% 
   mutate(dth_flag = recode(dth_flag, "0" = "Alive",
                            "1" = "Dead")) %>%
+  mutate(religion = recode(religion, "1" = "Great Stallion",
+                           "2" = "Lord of Light",
+                           "3" = "Faith of the Seven",
+                           "4" = "Old Gods",
+                           "5" = "Drowned God",
+                           "6" = "Many Faced God",
+                           "7" = "Great Shepard",
+                           "8" = "White Walkers",
+                           "9" = "Unknown",
+                           "10" = "Ghiscari",
+                           "11" = "None")) %>%
+  mutate(occupation = recode(occupation, "1" = "Silk collar",
+                             "2" = "Boiled leather collar",
+                             "9" = "Unknown/unclear")) %>%
   write_csv("data/GoT_data.csv")
+
+  
+  
