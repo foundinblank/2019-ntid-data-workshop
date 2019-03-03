@@ -68,5 +68,7 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
                               "9" = "Unknown/Unclear")) %>%
   mutate(prominence_cat = recode(prominence_cat, "1" = "Low",
                                  "2" = "Medium",
-                                 "3" = "High")) %>%
+                                 "3" = "High")) %>% 
+  mutate(dth_flag = recode(dth_flag, "0" = "Alive",
+                           "1" = "Dead")) %>%
   write_csv("data/GoT_data.csv")
