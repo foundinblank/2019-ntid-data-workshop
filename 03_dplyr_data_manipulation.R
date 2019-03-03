@@ -6,7 +6,7 @@
 
 library(tidyverse)
 
-# Load Game of Thrones Mortality dataset. This is made available to us via a data sharing agreement with Dr. Reidar P. Lystad (Macquarie University) and is for use only with this workshop. Please do not share/distribute this dataset to others. 
+# Load Game of Thrones Mortality dataset. This is made available to us via a data sharing agreement with Dr. Reidar P. Lystad (Macquarie University) and is for use only with this workshop. Please do not share or distribute this dataset to others. 
 # Lystad RP, Brown BT. “Death is certain, the time is not”: mortality and survival in Game of Thrones. Injury Epidemiology 2018; 5:44.
 # https://injepijournal.biomedcentral.com/articles/10.1186/s40621-018-0174-7
 
@@ -43,21 +43,90 @@ DT::datatable(got) # Searchable table (you also get this with View())
 
 got %>%
 #  group_by(allegiance_last) %>%
-  summarise(min_exp = min(exp_time_sec),
-            mean_exp = mean(exp_time_sec),
-            median_exp = median(exp_time_sec),
-            max_exp = max(exp_time_sec),
-            count_characters = n())
+  summarise(mean_exp = mean(exp_time_sec))
+
+got %>%
+  group_by(COD_text) %>%
+  summarise(count_characters = n())
+
+got %>%
+  group_by(allegiance_last, social_status) %>%
+  summarise(count_characters = n())
+
 
 # Filtering ---------------------------------------------------------------
 
 
+got %>%
+  filter(dth_flag == "Dead")
 
-# got <- got %>%
-#   filter(dth_flag == "Dead")
+got %>%
+  filter(dth_flag == "Dead") %>%
+  filter(allegiance_last == "Lannister") %>%
+  filter(social_status == "Highborn") %>%
+  filter(sex == "Male") %>%
+  group_by(COD_text) %>%
+  summarise(n())
+
+
+
+# Subsetting data ---------------------------------------------------------
+
+got_cleaned <- got %>%
+  filter(dth_flag == "Dead") %>%
+  filter(featured_episode_count > 1) %>%
+  filter(name != "Arya Stark")
+
+got_cleaned
+
+starks <- got %>%
+  filter(allegiance_last == "Stark")
+
+
+
+# Selecting ---------------------------------------------------------------
+
+got %>%
+  filter(allegiance_last != "Other") %>%
+  select(name, sex, religion, allegiance_last, exp_time_sec)
 
 
 got %>%
-  group_by(social_status, allegiance_last) %>%
-  summarise(count = n())
-  
+  select(-ID)
+
+got %>%
+  select(-ID, -name)
+
+got %>%
+  select(name:allegiance_switched)
+
+
+
+# Mutating ----------------------------------------------------------------
+
+to_mutate <- got %>%
+  select(name, allegiance_last, intro_time_sec, dth_time_sec, intro_episode, dth_episode) %>%
+  filter(!is.na(dth_time_sec))
+
+to_mutate
+
+to_mutate %>%
+  mutate(lifespan_secs = dth_time_sec - intro_time_sec) %>%
+  mutate(lifespan_hours = lifespan_secs/60/60)
+
+to_mutate %>%
+  mutate(lifespan_episodes = dth_episode - intro_episode)
+
+# What happens when you comment out group_by
+to_mutate %>%
+  mutate(lifespan_episodes = dth_episode - intro_episode) %>%
+  group_by(allegiance_last) %>%
+  summarise(mean_lifespan_episodes = mean(lifespan_episodes))
+
+
+
+
+# Arranging ---------------------------------------------------------------
+
+# Go back to any of the above, and try arranging by one variable, or two variables.
+# %>% arrange(desc(lifespan_episodes))
