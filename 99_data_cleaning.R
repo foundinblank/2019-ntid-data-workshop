@@ -87,5 +87,17 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
                              "9" = "Unknown/unclear")) %>%
   write_csv("data/GoT_data.csv")
 
-  
-  
+# ASL-LEX
+df <- read_csv("data/originals/SignData.csv") %>%
+  janitor::clean_names() %>% 
+  select(-x45) %>%
+  write_csv("data/ASL-LEX_Sign_Data.csv")
+
+# Tourism Data
+df <- read_csv("data/originals/SYB61_T30_Tourist-Visitors Arrival and Expenditure.csv", skip = 1) %>%
+  janitor::clean_names() %>%
+  rename(country = x2) %>%
+  filter(series == "Tourist/visitor arrivals (thousands)") %>%
+  select(country, year, value) %>%
+  spread(year, value) %>%
+  write_csv("data/Tourism_Visitor_Arrivals.csv")

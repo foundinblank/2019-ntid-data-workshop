@@ -124,9 +124,40 @@ to_mutate %>%
   summarise(mean_lifespan_episodes = mean(lifespan_episodes))
 
 
-
-
 # Arranging ---------------------------------------------------------------
 
 # Go back to any of the above, and try arranging by one variable, or two variables.
 # %>% arrange(desc(lifespan_episodes))
+
+
+
+
+# Playtime ----------------------------------------------------------------
+
+# Try a few manipulations of the Game of Thrones dataset, or try a new dataset here:
+# ASL-LEX (http://asl-lex.org/) 
+# Caselli, N., Sevcikova, Z., Cohen-Goldberg, A. M., & Emmorey, K. (2016). ASL-Lex: A Lexical Database for ASL. Behavior Research Methods. doi:10.3758/s13428-016-0742-0
+
+asllex_raw <- read_csv("data/ASL-LEX_Sign_Data.csv")
+
+glimpse(asllex_raw)
+
+asllex <- asllex_raw %>%
+  select(entry_id,
+         sign_type,
+         major_location,
+         initialized,
+         lexical_class,
+         sign_frequency_m,
+         iconicity_m,
+         sign_length_ms)
+
+asllex %>%
+  group_by(lexical_class, initialized) %>%
+  summarise(sign_length_avg = mean(sign_length_ms),
+            sign_length_sd = sd(sign_length_ms),
+            count = n())
+
+asllex %>%
+  filter(initialized == 1) %>%
+  View()
