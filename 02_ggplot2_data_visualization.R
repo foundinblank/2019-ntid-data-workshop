@@ -1,4 +1,6 @@
-# DESCRIPTION GOES HERE
+## Data Visualizing using ggplot2
+## Adam Stone
+## NTID Data Science Woorkshop, March 2019
 
 
 # Visualizing 1 -----------------------------------------------------------
@@ -40,6 +42,8 @@ marvel <- read_csv("data/Marvel_Characters.csv")
 glimpse(marvel)
 
 # Which are the most frequent characters?
+# What if you changed "fill" to "color"?
+# What happens if you change the filter argument? 
 marvel %>%
   mutate(name = fct_reorder(name, desc(appearances))) %>%
   filter(appearances > 1500) %>%
@@ -52,18 +56,21 @@ marvel %>%
   theme(axis.text.x = element_text(angle = -45, hjust = 0))
 
 # How many characters get introduced per year? 
-# Try adding fill = sex
+# Try adding color = "black" to geom_bar. What happens? What about fill = "black"?
+# Undo that, then add fill = sex to aes(). 
 marvel %>%
   ggplot(aes(x = year)) +
-  geom_bar(fill = "dark red", color = "black", width = 1) +
+  geom_bar(width = 1) +
   labs(x = "year",
        y = "characters", 
        title = "New Marvel Characters Introduced Per Year") +
   theme_linedraw()
 
 # Gender parity 
+# You can run part of the code, not all of it. 
+# Where does the ggplot code begin? 
 marvel %>%
-  mutate(sex = recode(sex, .default = "Other", .missing = "Other", "F" = "F")) %>%
+  mutate(sex = recode(sex, "Female" = "F", .default = "Other", .missing = "Other")) %>%
   group_by(year, sex) %>%
   summarise(characters = n()) %>%
   spread(sex, characters) %>%
@@ -74,7 +81,7 @@ marvel %>%
   mutate(f_sum = cumsum(F),
          o_sum = cumsum(Other),
          total = f_sum + o_sum,
-         ratio = f_sum/total) %>%
+         ratio = f_sum/total) %>% 
   ggplot(aes(x = year, y = ratio)) +
   geom_line(color = "dark red", size = 1, linetype = "longdash") +
   geom_hline(yintercept = .5) +
@@ -86,6 +93,7 @@ marvel %>%
 
 # Character Alignment
 # What happens if you comment out coord_flip()
+# The bunch of theme() code at the bottom - comment it out
 marvel %>%
   filter(sex == "Male" | sex == "Female") %>%
   filter(!is.na(align)) %>%
@@ -113,12 +121,8 @@ marvel %>%
 
 # Visualizing 3 -----------------------------------------------------------
 
-library(tidyverse)
 library(lubridate)
 library(unvotes)
-
-
-# Make a plot ------------------------------------------------------------------
 
 # Dataset: Erik Voeten "Data and Analyses of Voting in the UN General Assembly" Routledge Handbook of International Organization, edited by Bob Reinalda (published May 27, 2013)
 # Code: Mine Centinkaya-Rundel (2018), http://bit.ly/let-eat-cake
@@ -148,29 +152,3 @@ un_votes_data %>%
     x = "Year",
     color = "Country"
   )
-
-
-
-
-
-
-
-# Ehhhh -----------------------------------------------------------
-
-library(tidyverse)
-library(dslabs)
-
-# Look at what data's in dslabs
-data(package = "dslabs")
-
-# Load data
-diseases <- as_tibble(us_contagious_diseases) %>%
-  filter(state != "Hawaii" & state != "Alaska") %>%
-  mutate(rate = count / population * 10000 * 52 / weeks_reporting)
-
-diseases %>%
-  filter(disease == "Rubella") %>%
-  ggplot(aes(x = year, y = state, fill = rate)) +
-  geom_tile(color = "grey50") +
-  scale_fill_viridis_c() +
-  facet_wrap("disease") 

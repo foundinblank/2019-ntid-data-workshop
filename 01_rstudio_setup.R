@@ -1,4 +1,6 @@
-# DESCRIPTION GOES HERE
+## RStudio Setup
+## Adam Stone
+## NTID Data Science Woorkshop, March 2019
 
 
 
@@ -93,7 +95,7 @@ z
 
 starwars_data <- starwars
 
-# What do you see? How many observations (rows)? How many variables (columns). What happens when you click on the blue arrow?
+# What do you see? How many observations (rows)? How many variables (columns). What happens when you click on the blue arrow? What happens when you click on the name itself? 
 
 
 

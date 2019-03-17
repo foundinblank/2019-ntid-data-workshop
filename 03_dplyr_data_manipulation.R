@@ -1,5 +1,6 @@
-# DESCRIPTION GOES HERE
-
+## Data manipulation with dplyr
+## Adam Stone
+## NTID Data Science Woorkshop, March 2019
 
 
 # Explore the dataset -----------------------------------------------------
@@ -40,7 +41,9 @@ DT::datatable(got) # Searchable table (you also get this with View())
 
 
 # Summarizing -------------------------------------------------------------
+# Apply some function over columns
 
+# Uncomment group_by(). Try changing the variable in it. Re-comment. What do you notice?
 got %>%
 #  group_by(allegiance_last) %>%
   summarise(mean_exp = mean(exp_time_sec))
@@ -49,13 +52,23 @@ got %>%
   group_by(COD_text) %>%
   summarise(count_characters = n())
 
+# Try group_by() with multiple variables. How can that be useful for your study?
+# Think...grouping by gender AND hearing/deaf. Or graduate vs. undergraduates AND majors. 
 got %>%
   group_by(allegiance_last, social_status) %>%
   summarise(count_characters = n())
 
+# If you forget column names, just type glimpse(got) to see it again. 
+
+# Exercises:
+# 1. What’s the mean survival experience (in secs) for male vs. female characters?
+# 2. How many characters died indoors vs. outdoors? 
+# 3. How many highborns and lowborns of each house are there? 
+# 4. What happens when you swap grouping variables (e.g., group_by(a, b) vs. group_by(b,a)? 
+# 5. Challenge: Can you calculate the mean, median, and sd for #1 in one step?                                                   
 
 # Filtering ---------------------------------------------------------------
-
+# Remove or keep rows by a logical condition
 
 got %>%
   filter(dth_flag == "Dead")
@@ -68,28 +81,44 @@ got %>%
   group_by(COD_text) %>%
   summarise(n())
 
+# Exercises:
 
+# 1. How many characters from each House is now dead? 
+# 2. Among deceased characters, what is the average survival experience (in episodes) for men vs. women? 
+# 3. Among deceased Starks, what are their causes of death? 
+# 4. What about among deceased highborn male Lannisters?
+# 5. Among dead characters, how many switched allegiance? 
+  
 
 # Subsetting data ---------------------------------------------------------
 
-got_cleaned <- got %>%
-  filter(dth_flag == "Dead") %>%
-  filter(featured_episode_count > 1) %>%
-  filter(name != "Arya Stark")
+live_only <- got %>%
+  filter(dth_flag != "Dead")
 
-got_cleaned
+live_only
 
-starks <- got %>%
-  filter(allegiance_last == "Stark")
+loyal_targaryen_lives <- got %>%
+  filter(allegiance_last == "Targaryen") %>%
+  filter(prominence_cat == "High") %>%
+  filter(allegiance_switched == "No")
 
+loyal_targaryen_lives
+  
+# Create a separate dataset named "sig_dead_charactesr" with 
+# 1. Only dead characters,
+# 2. Excluding anyone with 1 or less featured episodes,
+# 3. and Arya Stark (because she's miscoded as "lowborn") 
+# 4. How many rows and columns are in this one? (Hint, look at Environment tab)
+# 5. 137 x 32? You got it! 
+# 6. Now filter that dataset to include only Starks.  
 
 
 # Selecting ---------------------------------------------------------------
+# Keeping removing, or re-arranging columns
 
 got %>%
   filter(allegiance_last != "Other") %>%
   select(name, sex, religion, allegiance_last, exp_time_sec)
-
 
 got %>%
   select(-ID)
@@ -101,8 +130,13 @@ got %>%
   select(name:allegiance_switched)
 
 
+# Exercises:
+# 1. What does - do? 
+# 2. What does : do? 
+
 
 # Mutating ----------------------------------------------------------------
+# Creating new columns
 
 to_mutate <- got %>%
   select(name, allegiance_last, intro_time_sec, dth_time_sec, intro_episode, dth_episode) %>%
@@ -123,12 +157,31 @@ to_mutate %>%
   group_by(allegiance_last) %>%
   summarise(mean_lifespan_episodes = mean(lifespan_episodes))
 
+# Exercises:
+# 1. Using 'got', assume seasons were always 10 episodes long. Can you calculate each character's lifespan in seasons? (e.g., Lysa Arryn lived for 4.7 seasons)
+
 
 # Arranging ---------------------------------------------------------------
+# Re-ordering rows
 
+# What does this do? 
+# You can add %>% View() to see its output in a new pane. 
+got %>%
+  arrange(intro_episode)
+
+# What does desc() wrapped around a column name do? 
+# Run this, then remove the desc() part and try it again. 
+got %>%
+  arrange(desc(prominence))
+
+# What happens if you arrange by two columns? 
+got %>%
+  arrange(allegiance_last, intro_episode)
+
+
+# Exercises:
 # Go back to any of the above, and try arranging by one variable, or two variables.
-# %>% arrange(desc(lifespan_episodes))
-
+# Focus on those with summarise() in them. You can re-arrange by the new summary columns!
 
 
 
