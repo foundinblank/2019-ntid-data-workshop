@@ -4,11 +4,12 @@ We're using [RStudio.cloud](https://rstudio.cloud/) - an instance of RStudio tha
 
 To set up:
 1. Use the link I've emailed you. It starts with `https://rstudio.cloud/...`. 
-2. Set up your RStudio Cloud account. 
-3. You should be in a workspace named "NTID Data Science Workshop" with one project called "Workshop Setup." 
-4. Click on the blue "Start" button to deploy and open the R project.
-5. In the lower-right pane, click on `01_rstudio_setup.R`.
-6. To make sure your R instance works, follow the instructions in that file.
+1. Set up your RStudio Cloud account. 
+1. Log in. Look at the "Spaces" on the left. Click on "NTID Data Science Workshop"
+1. Now you're in the NTID workspace. It should have one project called "Workshop Setup." 
+1. Click on the blue "Start" button next to it to deploy and open the R project.
+1. In the lower-right pane, click on `01_rstudio_setup.R`.
+1. To make sure your R instance works, follow the instructions in that file.
 
 *Or...you know, just watch the gif. Give it some time to load, it's a big baby :baby:.* 
 
