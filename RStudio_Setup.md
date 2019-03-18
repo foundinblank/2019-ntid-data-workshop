@@ -12,6 +12,6 @@ To set up:
 
 *Or...you know, just watch the gif. Give it some time to load, it's a big baby :baby:.* 
 
-![GIF showing how to, using RStudio Cloud, open the Workshop Materials project and then open the 01_rstudio_setup.R file.](img/rstudio_project.gif)
+![GIF showing how to, using RStudio Cloud, open the Workshop Materials project and then open the 01_rstudio_setup.R file.](img/rstudio_cloud_setup.gif)
 
 Get stuck? Lost? Distracted by imgur? :eyes: [Email me](mailto:adamstone@gmail.com).
