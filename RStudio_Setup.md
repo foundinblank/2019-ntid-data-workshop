@@ -3,7 +3,7 @@
 We're using [RStudio.cloud](https://rstudio.cloud/) - an instance of RStudio that runs entirely within your browser. It's like Google Docs, but for R! No installation needed. :sunglasses:
 
 To set up:
-1. Use the link I've emailed you. It'll be in an email with subject "Adam Stone has invited you to join RStudio Cloud" and the link starts with `https://login.rstudio.cloud/invite?...`. 
+1. Use the link I've emailed you. It starts with `https://login.rstudio.cloud/invite?...`. 
 2. Set up your RStudio Cloud account. 
 3. You should be in a workspace named "NTID Data Science Workshop" with one project called "Workshop Materials." 
 4. Click on the blue "Start" button to deploy and open the R project.
