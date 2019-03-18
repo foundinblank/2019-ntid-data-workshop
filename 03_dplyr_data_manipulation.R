@@ -1,6 +1,6 @@
 ## Data manipulation with dplyr
 ## Adam Stone
-## NTID Data Science Woorkshop, March 2019
+## NTID Data Science Workshop, March 2019
 
 
 # Explore the dataset -----------------------------------------------------
