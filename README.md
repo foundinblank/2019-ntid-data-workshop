@@ -8,17 +8,17 @@ Scientists are increasingly required to make their data preparation, analysis, a
 However, in the data analysis stage of a science project, preparing the data takes up 90% of the time. :scream: In this workshop, you will learn about how to do *reproducible* data preparation and analysis using [Rstudio](http://www.rstudio.com) and [the tidyverse](http://www.tidyverse.org). With these tools, you'll do better science :sunglasses:, save a lot of time :grin:, reduce errors :sweat_smile:, and even make some pretty graphs. :heart_eyes:
 
 ## Schedule
-### Mon. March 25, 6:00-8:00 PM (2-Hour Workshop)
+### Mon. March 25, 6:00-8:00 PM (2-Hour Workshop @ Rosica Conference Room)
 1.  Introduction to reproducible data analysis and why scientists in every discipline need to engage in it
 2. Rstudio & R projects
 3. Data visualization with [ggplot2](https://ggplot2.tidyverse.org/)
 
-### Tue. March 26, 6:00-8:00 PM (2-Hour Workshop)
-1. Reproducible workflows
+### Tue. March 26, 6:00-8:00 PM (2-Hour Workshop @ Rosica Conference Room)
+1. Reproducible research recap
 2. Manipulating and filtering data with [dplyr](https://dplyr.tidyverse.org/)
 3. Tidying and reshaping data with [tidyr](https://tidyr.tidyverse.org/)
 
-### Wed. March 27 - Fri. March 29: Small Group Data Sprints
+### Wed. March 27 - Fri. March 29: Small Group Data Sprints (Rosica 1140)
 This is going to be fun! :tada: With your lab or research group and some data, we'll meet for one-hour intensive sessions where we'll review your research questions, data, and requirements. Then you'll put your newly-acquired reproducible data analysis skills to immediate use and together, we will do data preparation, analysis, visualization, or all of the above. Depending on how many groups there are, we might meet more than once. These sprints are especially helpful if you are looking to move your team from SPSS and finally take control of your data analysis!
 
 ## Frequently Asked Questions
