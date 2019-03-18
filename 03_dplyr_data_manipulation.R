@@ -180,8 +180,9 @@ got %>%
 
 
 # Exercises:
-# Go back to any of the above, and try arranging by one variable, or two variables.
-# Focus on those with summarise() in them. You can re-arrange by the new summary columns!
+# 1. Go back to any of the above, and try arranging by one variable, or two variables.
+# 1.5. Focus on those with summarise() in them. You can re-arrange by the new summary columns!
+# 2. Among dead characters, which episode saw the most deaths? 
 
 
 
