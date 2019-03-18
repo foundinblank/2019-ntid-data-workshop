@@ -10,7 +10,7 @@ To set up:
 5. In the lower-right pane, click on `01_rstudio_setup.R`.
 6. To make sure your R instance works, follow the instructions in that file.
 
-*Or...you know, just watch the gif. Give it some time to load, it's a big baby :baby:).* 
+*Or...you know, just watch the gif. Give it some time to load, it's a big baby :baby:.* 
 
 ![GIF showing how to, using RStudio Cloud, open the Workshop Materials project and then open the 01_rstudio_setup.R file.](img/rstudio_project.gif)
 
