@@ -1,4 +1,4 @@
-id,area,year,series,value,footnotes,source
+id,country,year,series,value,footnotes,source
 1,"Total, all countries or areas",2000,Percentage of individuals using the internet,0.067,NA,"International Telecommunication Union (ITU), Geneva, the ITU database, last accessed February 2018."
 1,"Total, all countries or areas",2005,Percentage of individuals using the internet,0.156,NA,"International Telecommunication Union (ITU), Geneva, the ITU database, last accessed February 2018."
 1,"Total, all countries or areas",2010,Percentage of individuals using the internet,0.287,NA,"International Telecommunication Union (ITU), Geneva, the ITU database, last accessed February 2018."

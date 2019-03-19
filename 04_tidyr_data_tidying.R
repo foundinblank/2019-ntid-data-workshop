@@ -72,3 +72,43 @@ visitor_long %>%
   spread(year, visitors)
 
 # Same data, right? You're just reshaping it between long and wide!
+
+
+
+
+# Simon Data --------------------------------------------------------------
+
+# Do you know the Simon task? https://en.wikipedia.org/wiki/Simon_effect
+# This is a dataset of 35 participants doing the Simon Task, with 16 trials each.
+# Values are reaction times in milliseconds. 
+simon <- read_csv("data/Simon_data.csv")
+
+glimpse(simon)
+
+# Let's try calculating the average reaction time per participant.
+simon %>%
+  group_by(subject) %>%
+  summarise(mean_rt = mean(trial_1, trial_10, trial_11, trial_12, trial_.....))
+
+# I'm tired already. I can't type out all of those. 
+# This is one good reason to tidy the data and make it tall.
+simon_long <- simon %>%
+  gather(trial, reaction_time, trial_1:trial_9)
+
+# Much easier, right? 
+simon_mean <- simon_long %>%
+  group_by(subject) %>%
+  summarise(mean_rt = mean(reaction_time))
+
+simon_mean
+
+# And it's easier to plot the mean values too:
+simon_mean %>%
+  ggplot(aes(x = subject, y = mean_rt)) +
+  geom_col()
+
+simon_mean %>%
+  ggplot(aes(y = mean_rt)) +
+  geom_boxplot()
+
+

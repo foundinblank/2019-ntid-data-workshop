@@ -11,6 +11,7 @@ df <- read_csv("data/originals/SYB61_T29_Internet Usage.csv",
                              "footnotes",
                              "source")) %>%
   mutate(value = value/100) %>%
+  rename(country = area) %>%
   write_csv("data/Internet_Usage_by_Country.csv")
 
 # Marvel Characters

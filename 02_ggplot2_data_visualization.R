@@ -9,14 +9,17 @@ library(tidyverse)
 
 # Data from UN Data (Communication: Internet Usage)
 # http://data.un.org/
+
+# Load the data.
 internet_usage <- read_csv("data/Internet_Usage_by_Country.csv")
 
+# Take a quick look at it. 
 glimpse(internet_usage)
 
 # Compare internet usage across countries
 internet_usage %>%
-  filter(area %in% c('United States of America', 'Canada')) %>%
-  ggplot(aes(x = year, y = value, color = area)) +
+  filter(country %in% c('United States of America', 'Canada')) %>%
+  ggplot(aes(x = year, y = value, color = country)) +
   geom_line() +
   geom_point() +
   scale_y_continuous(limits = c(0,1), labels = scales::percent) +
@@ -29,10 +32,16 @@ internet_usage %>%
   theme(legend.position = 'right')
 
 
+# Exercises: 
+# 1.  Change the country. Think of one country that may outperform the United States, and one country that underperforms the United States
+# 2. Put # before geom_point() or geom_line() and run. What happens?
+# 3. Change the title or labels. What happens?
+# 4. Change theme_gray() to theme_classic(). Or theme_dark(). Explore the other themes in the drop-down menu that pops up (press Tab if you don’t see it)
+# 5. Can you move the legend to the bottom? 
+  
+
 
 # Visualizing 2 -----------------------------------------------------------
-
-library(tidyverse)
 
 # Data from FiveThirtyEight's Comic Characters dataset
 # https://github.com/fivethirtyeight/data/tree/master/comic-characters
@@ -42,8 +51,8 @@ marvel <- read_csv("data/Marvel_Characters.csv")
 glimpse(marvel)
 
 # Which are the most frequent characters?
-# What if you changed "fill" to "color"?
-# What happens if you change the filter argument? 
+# What if you changed "fill" to "color" on the ggplot(aes()) line?
+# What happens if you change the filter argument from 1500 to a different number? 
 marvel %>%
   mutate(name = fct_reorder(name, desc(appearances))) %>%
   filter(appearances > 1500) %>%
@@ -56,8 +65,9 @@ marvel %>%
   theme(axis.text.x = element_text(angle = -45, hjust = 0))
 
 # How many characters get introduced per year? 
-# Try adding color = "black" to geom_bar. What happens? What about fill = "black"?
-# Undo that, then add fill = sex to aes(). 
+# Try adding color = "black" to geom_bar() so it reads geom_bar(width = 1, color = "black") 
+# What if you tried fill = "black"? 
+# Undo both, then add fill = sex to ggplot(aes()). 
 marvel %>%
   ggplot(aes(x = year)) +
   geom_bar(width = 1) +
