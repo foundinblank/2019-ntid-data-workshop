@@ -7,26 +7,35 @@
 
 library(tidyverse)
 
-# Load Game of Thrones Mortality dataset. This is made available to us via a data sharing agreement with Dr. Reidar P. Lystad (Macquarie University) and is for use only with this workshop. Please do not share or distribute this dataset to others. 
-# Lystad RP, Brown BT. “Death is certain, the time is not”: mortality and survival in Game of Thrones. Injury Epidemiology 2018; 5:44.
+# Load Game of Thrones Mortality dataset. This is made available to us via a 
+# data sharing agreement with Dr. Reidar P. Lystad (Macquarie University) and 
+# is for use only with this workshop. Please do not share or distribute this 
+# dataset to others. Lystad RP, Brown BT. “Death is certain, the time is not”:
+# mortality and survival in Game of Thrones. Injury Epidemiology 2018; 5:44.
 # https://injepijournal.biomedcentral.com/articles/10.1186/s40621-018-0174-7
 
 got <- read_csv("data/GoT_data.csv")
 
-# Description for non-obvious columns
-# allegiance_switched: did character switch allegiance at any point during their show?
-# intro_*: season/episode/time in which the character appeared
-# dth_*: season/episode/time in which the character died
-# exp_*: survival experience; span of seasons/episodes/time
-# dth_flag: is character alive or dead? 
-# featured_episode_count: number of episodes in which character appeared
-# prominence: metric of "importance" of character
-# diagnosis: how death occurred
-# COD: cause of death
-# place: where death occurred
-# location: indoors or outdoors
+# Column Description
+# ID: character ID
+# Name: Character name
+# Status: Dead or Alive
+# Prominence: How prominent is the character? (High, Medium, Low)
+# Sex: Male or Female
+# Religion: Religion
+# Social Staus: Highborn or Lowborn
+# House_last: The last house they swore allegiance to before dying or end of Season 6
+# Allegiance_switched: Did they switch allegiance at any point during the show?
+# Intro_season: Season they first appeared (1 to 6)
+# Intro_episode: Episode they first appeared (1 to 64)
+# Intro_sec: Time they first appeared (1 to 192860
+# Death_season, death_episode, death_sec: Same as above
+# Lifespan_season, lifespan_episode, lifespan_sec: Difference between Intro & Death
+# Death_how: How exactly did they die
+# Diagnosis: Cause of death
 
-# Basic ways
+
+# Basic ways to view data (I use all of them!)
 got # Easy, fast, pretty good
 View(got) # Show table in Rstudio
 head(got) # Show first 10 rows (or head(got, n) to show n rows)
@@ -44,51 +53,52 @@ DT::datatable(got) # Searchable table (you also get this with View())
 # Summarizing -------------------------------------------------------------
 # Apply some function over columns
 
-# This will calculate the average exp_time_sec of all characters, called "avg_exp". 
-# But we want to know the average exp_time_sec for *each* house (allegiance_last). 
-# Uncomment the middle line by removing # from group_by(allegiance_last). 
+# This will calculate the average lifespan_sec of all characters, called "avg_lifespan". 
+# But we want to know the average lifespan for *each* house (house_last). 
+# Uncomment the middle line by removing # from group_by(house_last). 
 # What do you get?
-# What if you changed allegiance_last to religion, or to sex?
+# What if you changed house_last to religion, or to sex?
 got %>%
-  group_by(prominence_cat) %>%
-  summarise(avg_exp = mean(exp_time_sec))
+  group_by(prominence) %>%
+  summarise(avg_lifespan = mean(lifespan_sec))
 
 got %>%
-  group_by(COD_text) %>%
+  group_by(diagnosis) %>%
   summarise(count_of_characters = n())
 
 # Try group_by() with multiple variables. How can that be useful for your study?
 # Think...grouping by gender AND hearing/deaf. Or graduate vs. undergraduates AND majors. 
 got %>%
-  group_by(allegiance_last, social_status) %>%
+  group_by(house_last, social_status) %>%
   summarise(count_characters = n())
 
 # If you forget column names, you can run glimpse(got) to see them again. 
 
-# Exercises (you can copy/paste the code above, or write new code):
-# 1. What’s the mean survival experience (in secs) for male vs. female characters?
-# 2. How many characters died indoors vs. outdoors? 
-# 3. How many highborns and lowborns of each religion are there? 
-# 4. What happens when you swap grouping variables (e.g., group_by(a, b) vs. group_by(b,a)? 
-# 5. Challenge: Can you calculate the mean, median, and sd for #1 in one step?    
+# Exercises (you can put your code in between each exercise):
+# 1. What’s the mean lifespan (in secs) for male vs. female characters?
+# 2. How many highborns and lowborns of each religion are there? 
+# 3. What happens when you swap grouping variables (e.g., group_by(a, b) vs. group_by(b,a)? 
+# 4. Challenge: Can you also calculate the median and sd for #1 in one step? 
+#    Hint: mean(), median(), sd()
 
 
 
 # Filtering ---------------------------------------------------------------
 # Remove or keep rows by a logical condition
 
-# This will return all rows where dth_flag == "Dead"
+# This will return all rows where status == "Dead"
 # What happens if you change == to !=? 
 got %>%
-  filter(dth_flag == "Dead")
+  filter(status == "Dead")
 
-# Who is included in this analysis? 
+# Which character groups are included in this analysis? 
+# Try changing "diagnosis" to "death_how"
 got %>%
-  filter(dth_flag == "Dead") %>%
-  filter(allegiance_last == "Lannister") %>%
+  filter(status == "Dead") %>%
+  filter(house_last == "Lannister") %>%
   filter(social_status == "Highborn") %>%
   filter(sex == "Male") %>%
-  group_by(COD_text) %>%
+  group_by(diagnosis) %>%
   summarise(n())
 
 # Exercises:
@@ -104,34 +114,38 @@ got %>%
 
 # Run this, then look at the Environment pane. What's the difference between the two?
 live_only <- got %>%
-  filter(dth_flag != "Dead")
+  filter(status != "Dead")
 
 live_only
 
 # Try creating a new data frame with only well-known Targaryen loyalists.
 loyal_targaryen_lives <- got %>%
-  filter(allegiance_last == "Targaryen") %>%
-  filter(prominence_cat == "High") %>%
+  filter(house_last == "Targaryen") %>%
+  filter(prominence == "High") %>%
   filter(allegiance_switched == "No")
 
 loyal_targaryen_lives
   
 # Exercise:
-# 1. Create a separate dataset named "sig_dead_charactesr" with 
-#    -Only dead characters,
-#    -excluding anyone with 1 or less featured episodes,
+# 1. Create a separate dataset named "dead_characters" with 
+#    -Only dead characters, and 
+#    -Excluding anyone who showed up in Season 3 or later
 # How many rows and columns are in this one? (Hint, look at Environment tab)
-# 137 x 32? You got it! 
-# 2. Now filter that dataset to include only Starks.  
+# 100 x 20? You got it! 
+# 2. Now filter that dataset to include only those whose last house was Stark. 
+# 19x20? You got it! 
 
+dead_characters <- got %>%
+  filter(status == "Dead") %>%
+  filter(intro_season <= 2)
 
 # Selecting ---------------------------------------------------------------
 # Keeping removing, or re-arranging columns
 
 # Which columns will be kept in this pipe?
 got %>%
-  filter(allegiance_last != "Other") %>%
-  select(name, sex, religion, allegiance_last, exp_time_sec)
+  filter(house_last != "Other") %>%
+  select(name, sex, religion, house_last, lifespan_sec)
 
 # What does this do? 
 # Try removing the - 
@@ -151,24 +165,24 @@ got %>%
 
 # First, let's create a simpler dataset to work with, named "to_mutate."
 to_mutate <- got %>%
-  filter(dth_flag == "Dead") %>%
-  select(name, allegiance_last, intro_time_sec, dth_time_sec, intro_episode, dth_episode)
+  filter(status == "Dead") %>%
+  select(name, house_last, intro_sec, death_sec, intro_episode, death_episode)
 
 to_mutate
 
 # Now, use mutate() to calculate a lifespan in seconds, and then in hours. 
-# Notice how I can pass the new variable, lifespan_secs, to the next line of code to be further mutated
+# Notice how I can pass the new variable, lifespan_sec, to the next line of code to be further mutated
 to_mutate %>%
-  mutate(lifespan_secs = dth_time_sec - intro_time_sec) %>%
-  mutate(lifespan_hours = lifespan_secs/60/60)
+  mutate(lifespan_sec = death_sec - intro_sec) %>%
+  mutate(lifespan_hour = lifespan_sec/60/60)
 
 to_mutate %>%
-  mutate(lifespan_episodes = dth_episode - intro_episode)
+  mutate(lifespan_episode = death_episode - intro_episode)
 
 # What happens when you comment out group_by? (Add a # to the beginning of that line.)
 to_mutate %>%
-  mutate(lifespan_episodes = dth_episode - intro_episode) %>%
-  group_by(allegiance_last) %>%
+  mutate(lifespan_episodes = death_episode - intro_episode) %>%
+  group_by(house_last) %>%
   summarise(mean_lifespan_episodes = mean(lifespan_episodes))
 
 # Exercises:
@@ -181,8 +195,8 @@ to_mutate %>%
 # What does this do? 
 # You can add %>% View() to see its output in a new pane. 
 got %>%
-  select(name, allegiance_last, intro_time_sec) %>%
-  arrange(intro_time_sec)
+  select(name, house_last, intro_sec) %>%
+  arrange(intro_sec)
 
 # What does desc() wrapped around a column name do? 
 # Run this, then change arrange(desc(name)) to just arrange(name)
@@ -191,7 +205,7 @@ got %>%
 
 # What happens if you arrange by two columns? 
 got %>%
-  arrange(allegiance_last, intro_episode)
+  arrange(house_last, intro_episode)
 
 
 # Exercises:

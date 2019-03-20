@@ -86,6 +86,18 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
   mutate(occupation = recode(occupation, "1" = "Silk collar",
                              "2" = "Boiled leather collar",
                              "9" = "Unknown/unclear")) %>%
+  rename(house_last = allegiance_last,
+         intro_sec = intro_time_sec,
+         dth_sec = dth_time_sec,
+         status = dth_flag,
+         lifespan_season = exp_season,
+         lifespan_episode = exp_episode,
+         lifespan_sec = exp_time_sec) %>%
+  select(-censor_time_sec, -prominence, -occupation, -COD, -COD_text, -continent,
+         -place, -place_text, -time_of_day, -featured_episode_count, -diagnosis,
+         -location) %>%
+  select(ID, name, status, prominence_cat, everything()) %>%
+  rename(prominence = prominence_cat) %>%
   write_csv("data/GoT_data.csv")
 
 # ASL-LEX
