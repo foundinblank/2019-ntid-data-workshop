@@ -26,6 +26,14 @@ df <- read_csv("data/originals/marvel_wiki_data.csv") %>%
          align = str_trim(align)) %>%
   write_csv("data/Marvel_Characters.csv")
 
+# Marvel Characters Tall
+df <- read_csv("data/Marvel_Characters.csv") %>%
+  group_by(year, sex) %>%
+  summarise(characters = n()) %>%
+  filter(!is.na(year)) %>%
+  filter(!is.na(sex)) %>%
+  write_csv("data/Marvel_Characters_tall.csv")
+
 # Fingerspelling Fluency
 df <- haven::read_sav("data/originals/Fingerspelling and Fluency PLoS Data Set.sav") %>%
   janitor::clean_names() %>%

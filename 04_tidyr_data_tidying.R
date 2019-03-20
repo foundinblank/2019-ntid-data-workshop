@@ -39,7 +39,28 @@ ch1_long %>%
 
 
 
-# Gathering Visitor Data --------------------------------------------------
+# Spreading Marvel Data ---------------------------------------------------
+
+# Let's load a "tall" version I made using Marvel character data: 
+marvel <- read_csv("data/Marvel_Characters_tall.csv")
+
+# View it
+marvel
+
+# Wouldn't it be nice if we could compare genders side-by-side, one year per row?
+# In spread():
+# I want the column names to be "sex"
+# I want the values under the new column names to be "characters"
+marvel %>%
+  spread(sex, characters)
+
+marvel %>%
+  spread(sex, characters) %>%
+  View()
+
+
+
+# Gathering & Spreading Visitor Data --------------------------------------
 
 visitors <- read_csv("data/Tourism_Visitor_Arrivals.csv")
 
@@ -64,12 +85,9 @@ glimpse(visitors)
 # 3. Pick a geometric layer, geom_line() 
 
 
-
-
-# Spreading data ----------------------------------------------------------
-
 # Let's spread visitor_long, so you can compare year by year changes easily. 
-# You may have to change the names in spread() depending on how you named the new columns in gather()
+# You may have to change the names in spread() depending on 
+# how you named the new columns in gather()
 visitor_long %>%
   spread(year, visitors)
 
