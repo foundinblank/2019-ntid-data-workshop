@@ -116,18 +116,19 @@ simon_long <- simon %>%
   gather(trial, reaction_time, trial_1:trial_9)
 
 # Much easier, right? 
-simon_mean <- simon_long %>%
+simon_means <- simon_long %>%
   group_by(subject) %>%
-  summarise(mean_rt = mean(reaction_time))
+  summarise(mean_rt = mean(reaction_time),
+            sd_rt = sd(reaction_time))
 
-simon_mean
+simon_means
 
 # And it's easier to plot the mean values too:
-simon_mean %>%
+simon_means %>%
   ggplot(aes(x = subject, y = mean_rt)) +
   geom_col()
 
-simon_mean %>%
+simon_means %>%
   ggplot(aes(y = mean_rt)) +
   geom_boxplot()
 
