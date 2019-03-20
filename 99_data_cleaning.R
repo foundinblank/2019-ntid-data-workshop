@@ -88,7 +88,9 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
                              "9" = "Unknown/unclear")) %>%
   rename(house_last = allegiance_last,
          intro_sec = intro_time_sec,
-         dth_sec = dth_time_sec,
+         death_season = dth_season,
+         death_episode = dth_episode,
+         death_sec = dth_time_sec,
          status = dth_flag,
          lifespan_season = exp_season,
          lifespan_episode = exp_episode,
@@ -97,7 +99,9 @@ df <- readxl::read_xlsx("data/originals/GoTdata_FINAL.xlsx", sheet = 1) %>%
          -place, -place_text, -time_of_day, -featured_episode_count, -diagnosis,
          -location) %>%
   select(ID, name, status, prominence_cat, everything()) %>%
-  rename(prominence = prominence_cat) %>%
+  rename(prominence = prominence_cat,
+        death_how = dth_description,
+        diagnosis = diagnosis_text) %>%
   write_csv("data/GoT_data.csv")
 
 # ASL-LEX
