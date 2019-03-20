@@ -18,6 +18,7 @@ got <- read_csv("data/GoT_data.csv")
 # intro_*: season/episode/time in which the character appeared
 # dth_*: season/episode/time in which the character died
 # exp_*: survival experience; span of seasons/episodes/time
+# dth_flag: is character alive or dead? 
 # featured_episode_count: number of episodes in which character appeared
 # prominence: metric of "importance" of character
 # diagnosis: how death occurred
@@ -43,14 +44,18 @@ DT::datatable(got) # Searchable table (you also get this with View())
 # Summarizing -------------------------------------------------------------
 # Apply some function over columns
 
-# Uncomment group_by(). Try changing the variable in it. Re-comment. What do you notice?
+# This will calculate the average exp_time_sec of all characters, called "avg_exp". 
+# But we want to know the average exp_time_sec for *each* house (allegiance_last). 
+# Uncomment the middle line by removing # from group_by(allegiance_last). 
+# What do you get?
+# What if you changed allegiance_last to religion, or to sex?
 got %>%
-#  group_by(allegiance_last) %>%
-  summarise(mean_exp = mean(exp_time_sec))
+  group_by(prominence_cat) %>%
+  summarise(avg_exp = mean(exp_time_sec))
 
 got %>%
   group_by(COD_text) %>%
-  summarise(count_characters = n())
+  summarise(count_of_characters = n())
 
 # Try group_by() with multiple variables. How can that be useful for your study?
 # Think...grouping by gender AND hearing/deaf. Or graduate vs. undergraduates AND majors. 
@@ -58,21 +63,26 @@ got %>%
   group_by(allegiance_last, social_status) %>%
   summarise(count_characters = n())
 
-# If you forget column names, just type glimpse(got) to see it again. 
+# If you forget column names, you can run glimpse(got) to see them again. 
 
-# Exercises:
+# Exercises (you can copy/paste the code above, or write new code):
 # 1. What’s the mean survival experience (in secs) for male vs. female characters?
 # 2. How many characters died indoors vs. outdoors? 
-# 3. How many highborns and lowborns of each house are there? 
+# 3. How many highborns and lowborns of each religion are there? 
 # 4. What happens when you swap grouping variables (e.g., group_by(a, b) vs. group_by(b,a)? 
-# 5. Challenge: Can you calculate the mean, median, and sd for #1 in one step?                                                   
+# 5. Challenge: Can you calculate the mean, median, and sd for #1 in one step?    
+
+
 
 # Filtering ---------------------------------------------------------------
 # Remove or keep rows by a logical condition
 
+# This will return all rows where dth_flag == "Dead"
+# What happens if you change == to !=? 
 got %>%
   filter(dth_flag == "Dead")
 
+# Who is included in this analysis? 
 got %>%
   filter(dth_flag == "Dead") %>%
   filter(allegiance_last == "Lannister") %>%
@@ -84,19 +94,21 @@ got %>%
 # Exercises:
 
 # 1. How many characters from each House is now dead? 
-# 2. Among deceased characters, what is the average survival experience (in episodes) for men vs. women? 
-# 3. Among deceased Starks, what are their causes of death? 
-# 4. What about among deceased highborn male Lannisters?
-# 5. Among dead characters, how many switched allegiance? 
+# 2. Among dead characters, how many switched allegiance? 
+# 3. Among deceased characters, what is the average lifespan (in episodes) for men vs. women? 
+# 4. Among deceased Starks, what are their causes of death? 
+# 5. What about among deceased highborn male Lannisters?
   
 
 # Subsetting data ---------------------------------------------------------
 
+# Run this, then look at the Environment pane. What's the difference between the two?
 live_only <- got %>%
   filter(dth_flag != "Dead")
 
 live_only
 
+# Try creating a new data frame with only well-known Targaryen loyalists.
 loyal_targaryen_lives <- got %>%
   filter(allegiance_last == "Targaryen") %>%
   filter(prominence_cat == "High") %>%
@@ -104,46 +116,48 @@ loyal_targaryen_lives <- got %>%
 
 loyal_targaryen_lives
   
-# Create a separate dataset named "sig_dead_charactesr" with 
-# 1. Only dead characters,
-# 2. Excluding anyone with 1 or less featured episodes,
-# 3. and Arya Stark (because she's miscoded as "lowborn") 
-# 4. How many rows and columns are in this one? (Hint, look at Environment tab)
-# 5. 137 x 32? You got it! 
-# 6. Now filter that dataset to include only Starks.  
+# Exercise:
+# 1. Create a separate dataset named "sig_dead_charactesr" with 
+#    -Only dead characters,
+#    -excluding anyone with 1 or less featured episodes,
+# How many rows and columns are in this one? (Hint, look at Environment tab)
+# 137 x 32? You got it! 
+# 2. Now filter that dataset to include only Starks.  
 
 
 # Selecting ---------------------------------------------------------------
 # Keeping removing, or re-arranging columns
 
+# Which columns will be kept in this pipe?
 got %>%
   filter(allegiance_last != "Other") %>%
   select(name, sex, religion, allegiance_last, exp_time_sec)
 
+# What does this do? 
+# Try removing the - 
 got %>%
-  select(-ID)
+  select(-name)
 
 got %>%
-  select(-ID, -name)
+  select(-ID, -name, -religion)
 
+# The colon : indicates a range. 
 got %>%
   select(name:allegiance_switched)
-
-
-# Exercises:
-# 1. What does - do? 
-# 2. What does : do? 
 
 
 # Mutating ----------------------------------------------------------------
 # Creating new columns
 
+# First, let's create a simpler dataset to work with, named "to_mutate."
 to_mutate <- got %>%
-  select(name, allegiance_last, intro_time_sec, dth_time_sec, intro_episode, dth_episode) %>%
-  filter(!is.na(dth_time_sec))
+  filter(dth_flag == "Dead") %>%
+  select(name, allegiance_last, intro_time_sec, dth_time_sec, intro_episode, dth_episode)
 
 to_mutate
 
+# Now, use mutate() to calculate a lifespan in seconds, and then in hours. 
+# Notice how I can pass the new variable, lifespan_secs, to the next line of code to be further mutated
 to_mutate %>%
   mutate(lifespan_secs = dth_time_sec - intro_time_sec) %>%
   mutate(lifespan_hours = lifespan_secs/60/60)
@@ -151,7 +165,7 @@ to_mutate %>%
 to_mutate %>%
   mutate(lifespan_episodes = dth_episode - intro_episode)
 
-# What happens when you comment out group_by
+# What happens when you comment out group_by? (Add a # to the beginning of that line.)
 to_mutate %>%
   mutate(lifespan_episodes = dth_episode - intro_episode) %>%
   group_by(allegiance_last) %>%
@@ -167,12 +181,13 @@ to_mutate %>%
 # What does this do? 
 # You can add %>% View() to see its output in a new pane. 
 got %>%
-  arrange(intro_episode)
+  select(name, allegiance_last, intro_time_sec) %>%
+  arrange(intro_time_sec)
 
 # What does desc() wrapped around a column name do? 
-# Run this, then remove the desc() part and try it again. 
+# Run this, then change arrange(desc(name)) to just arrange(name)
 got %>%
-  arrange(desc(prominence))
+  arrange(desc(name))
 
 # What happens if you arrange by two columns? 
 got %>%

@@ -12,26 +12,28 @@ library(tidyverse)
 fnirs <- read_csv("data/AT273_individualdata_wavelet.csv") %>%
   select(-c(group, onset, mark, valid, rep, type, prune))
 
-# I want to plot the HbO & HbR signal in channel 1 during the first trial. Derrrr
+# I want to plot the HbO signal in channel 1 during the first trial.
+# So I make a small dataset with just this data 
 ch1 <- fnirs %>%
   filter(chnum == 1) %>% # channel 1
-  filter(trialnum == 1) # first trial
-
+  filter(trialnum == 1) %>% # first trial
+  filter(hbx == 1) # Just HbO data
+  
 ch1 %>%
   ggplot(aes(x = ..., y = ...)) 
 
 # Changing wide to long format is called "gathering"
-# I want to put all column names from time1 to time160 in a new "time" column 
-# And I want to put all values in time1:time160 (that's a range) in a new "hb_value" column
+# I want to put all column names in a new "time" column.
+# And I want to put all values in a new "hb_value" column.
+# And I want this to operate over the columns time1 to time160. 
 ch1_long <- ch1 %>%
   gather(time, hb_value, time1:time160) %>%
-  mutate_at(vars(trialnum:hbx), as.factor) %>%
-  mutate(time = str_remove(time, "time")) %>%
-  mutate(time = as.double(time))
+  mutate(time = str_remove(time, "time")) %>% # this removes "time"
+  mutate(time = as.double(time)) # this makes "time" a numeric variable
 
 # Now let's try again with plotting
 ch1_long %>%
-  ggplot(aes(x = time, y = hb_value, color = hbx)) +
+  ggplot(aes(x = time, y = hb_value)) +
   geom_line()
 
 
