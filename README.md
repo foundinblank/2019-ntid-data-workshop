@@ -2,6 +2,8 @@
 
 ### March 25-29, 2019 at [NTID](http://www.ntid.edu), Rochester, NY
 
+![Launch Into The Tidyverse! Reproducible Data Analysis in R - with a picture of Rocket from Guardians of the Galaxy](img/presentation-cover.png)
+
 ## Objective
 Scientists are increasingly required to make their data preparation, analysis, and statistics **reproducible**. :point_up: Reproducible resarch means anyone should be able to take your dataset and, using your analysis plan, arrive at exactly the same results as you did. That's good science! :raised_hands:
 
